@@ -44,7 +44,7 @@ public class DaoCinema {
     public static List<Cinema> consultar() {
         List<Cinema> resultados = new ArrayList<>();
         //editar o SQL conforme a entidade
-        String sql = "SELECT endereco, capacidade FROM produto";
+        String sql = "SELECT codigo, endereco, capacidade FROM cinema";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
@@ -52,7 +52,7 @@ public class DaoCinema {
             while (rs.next()) {
                 Cinema objeto = new Cinema();
                 //definir um set para cada atributo da entidade, cuidado com o tipo
-                objeto.setCodigo(rs.getInt("codigo"));
+                objeto.setCodigo(rs.getInt("Codigo"));
                 objeto.setEndereco(rs.getString("endereco"));
                 objeto.setCapacidade(rs.getInt("capacidade"));
                 
