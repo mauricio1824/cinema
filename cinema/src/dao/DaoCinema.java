@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.Cinema;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DaoCinema {
     public static boolean inserir(Cinema objeto) {
@@ -37,4 +40,29 @@ public class DaoCinema {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
     }
+   
+    public static List<Cinema> consultar() {
+        List<Cinema> resultados = new ArrayList<>();
+        //editar o SQL conforme a entidade
+        String sql = "SELECT endereco, capacidade FROM produto";
+        PreparedStatement ps;
+        try {
+            ps = conexao.Conexao.getConexao().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Cinema objeto = new Cinema();
+                //definir um set para cada atributo da entidade, cuidado com o tipo
+                objeto.setCodigo(rs.getInt("codigo"));
+                objeto.setEndereco(rs.getString("endereco"));
+                objeto.setCapacidade(rs.getInt("capacidade"));
+                
+                resultados.add(objeto);//não mexa nesse, ele adiciona o objeto na lista
+            }
+            return resultados;
+        } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+}
+
 }

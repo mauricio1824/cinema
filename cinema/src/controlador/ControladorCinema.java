@@ -9,6 +9,10 @@ import dao.DaoCinema;
 import javax.swing.JOptionPane;
 import modelo.Cinema;
 import tela.manutencao.ManutencaoCinema;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class ControladorCinema {
 
@@ -24,4 +28,22 @@ public class ControladorCinema {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
 }
+    public static void atualizarTabela(JTable tabela) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        //definindo o cabeçalho da tabela
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Endereco");
+        modelo.addColumn("Capacidade");
+        List<Cinema> resultados = DaoCinema.consultar();
+        for (Cinema objeto : resultados) {
+            Vector linha = new Vector();
+            
+            //definindo o conteúdo da tabela
+            linha.add(objeto.getCodigo());
+            linha.add(objeto.getEndereco());
+            linha.add(objeto.getCapacidade());
+            modelo.addRow(linha); //adicionando a linha na tabela
+        }
+        tabela.setModel(modelo);
+    }
 }
